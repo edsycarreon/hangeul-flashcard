@@ -1,4 +1,4 @@
-import React, {
+import {
   useRef,
   useState,
   useEffect,
@@ -14,6 +14,8 @@ interface DrawingCanvasProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onDrawingComplete"> {
   width?: number;
   height?: number;
+  strokeWidth?: number;
+  showGuideLines?: boolean;
   onDrawingComplete?: () => void;
   className?: string;
 }
@@ -21,6 +23,8 @@ interface DrawingCanvasProps
 export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   width = 400,
   height = 400,
+  strokeWidth = 3,
+  showGuideLines = true,
   onDrawingComplete,
   className,
   ...props
@@ -28,11 +32,11 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
-  const [showGuideLines, setShowGuideLines] = useState(true);
-  const [strokeWidth, setStrokeWidth] = useState(3);
   const [hasDrawn, setHasDrawn] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [canvasSize, setCanvasSize] = useState({ width, height });
+  const [guideLines, setGuideLines] = useState(showGuideLines);
+  const [lineWidth, setLineWidth] = useState(strokeWidth);
 
   // Define clearCanvas as a useCallback to ensure it's stable across renders
   const clearCanvas = useCallback(() => {
@@ -45,12 +49,12 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
     context.clearRect(0, 0, canvasSize.width, canvasSize.height);
 
     // Redraw guide lines
-    if (showGuideLines) {
+    if (guideLines) {
       drawGuideLines(context);
     }
 
     setHasDrawn(false);
-  }, [canvasSize.width, canvasSize.height, showGuideLines]);
+  }, [canvasSize.width, canvasSize.height, guideLines]);
 
   // Initialize canvas context and handle resizing
   useEffect(() => {
@@ -101,7 +105,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
     context.lineCap = "round";
     context.lineJoin = "round";
     context.strokeStyle = "#000000";
-    context.lineWidth = strokeWidth;
+    context.lineWidth = lineWidth;
 
     setCtx(context);
 
@@ -109,8 +113,8 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
     const loadSettings = async () => {
       const settings = await getSettings();
       if (settings) {
-        setShowGuideLines(settings.showGuideLines);
-        setStrokeWidth(settings.strokeWidth);
+        setGuideLines(settings.showGuideLines);
+        setLineWidth(settings.strokeWidth);
         context.lineWidth = settings.strokeWidth;
       }
     };
@@ -119,7 +123,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
 
     // Draw initial guide lines
     drawGuideLines(context);
-  }, [canvasSize.width, canvasSize.height, strokeWidth]);
+  }, [canvasSize.width, canvasSize.height, lineWidth]);
 
   // Subscribe to card navigation events to clear canvas
   useEffect(() => {
@@ -143,7 +147,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
 
   // Draw guide lines
   const drawGuideLines = (context: CanvasRenderingContext2D) => {
-    if (!showGuideLines) return;
+    if (!guideLines) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -184,7 +188,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
 
     // Reset stroke style for drawing
     context.strokeStyle = "#000000";
-    context.lineWidth = strokeWidth;
+    context.lineWidth = lineWidth;
   };
 
   // Handle mouse/touch events
@@ -238,7 +242,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
 
   // Toggle guide lines
   const toggleGuideLines = () => {
-    setShowGuideLines(!showGuideLines);
+    setGuideLines(!guideLines);
     if (ctx) {
       drawGuideLines(ctx);
     }
@@ -280,7 +284,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
           Clear
         </Button>
         <Button variant="outline" onClick={toggleGuideLines} size="sm">
-          {showGuideLines ? "Hide Grid" : "Show Grid"}
+          {guideLines ? "Hide Grid" : "Show Grid"}
         </Button>
         <Button
           variant="default"

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useFlashcards } from "../contexts/FlashcardContext";
-import Flashcard from "./Flashcard";
+import { Flashcard } from "./Flashcard";
 import { DrawingCanvas } from "./DrawingCanvas";
 import RatingComponent from "./RatingComponent";
 import { Button } from "./ui/button";

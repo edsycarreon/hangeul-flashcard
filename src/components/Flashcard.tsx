@@ -9,7 +9,7 @@ interface FlashcardProps {
   onFlip: () => void;
 }
 
-const Flashcard: React.FC<FlashcardProps> = ({
+export const Flashcard: React.FC<FlashcardProps> = ({
   character,
   isFlipped,
   onFlip,
@@ -111,5 +111,3 @@ const Flashcard: React.FC<FlashcardProps> = ({
     </div>
   );
 };
-
-export default Flashcard;
