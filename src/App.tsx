@@ -1,4 +1,3 @@
-import React from "react";
 import { FlashcardProvider } from "./contexts/FlashcardContext";
 import FlashcardScreen from "./components/FlashcardScreen";
 import { initDB } from "./lib/storage";

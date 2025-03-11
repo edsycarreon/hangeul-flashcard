@@ -17,6 +17,7 @@ interface DrawingCanvasProps
   strokeWidth?: number;
   showGuideLines?: boolean;
   onDrawingComplete?: () => void;
+  onClear?: () => void;
   className?: string;
 }
 
@@ -26,6 +27,7 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
   strokeWidth = 3,
   showGuideLines = true,
   onDrawingComplete,
+  onClear,
   className,
   ...props
 }) => {
@@ -54,7 +56,12 @@ export const DrawingCanvas: React.FC<DrawingCanvasProps> = ({
     }
 
     setHasDrawn(false);
-  }, [canvasSize.width, canvasSize.height, guideLines]);
+
+    // Call the onClear callback if provided
+    if (onClear) {
+      onClear();
+    }
+  }, [canvasSize.width, canvasSize.height, guideLines, onClear]);
 
   // Initialize canvas context and handle resizing
   useEffect(() => {

@@ -7,6 +7,8 @@ interface FlashcardProps {
   character: KoreanCharacter;
   isFlipped: boolean;
   onFlip: () => void;
+  autoFlip?: boolean;
+  autoFlipDelay?: number;
 }
 
 export const Flashcard: React.FC<FlashcardProps> = ({
