@@ -87,4 +87,42 @@
   .rotateY-180 {
     transform: rotateY(180deg);
   }
+
+  .rotate-y {
+    transform: rotateY(var(--tw-rotate-y, 0));
+  }
+
+  /* Animation for the landing page flashcard */
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Pulsing animation for hints */
+  @keyframes pulse {
+    0% {
+      transform: scale(1) translateX(-50%);
+    }
+    50% {
+      transform: scale(1.05) translateX(-48%);
+    }
+    100% {
+      transform: scale(1) translateX(-50%);
+    }
+  }
+
+  .animate-pulse-custom {
+    animation: pulse 2s ease-in-out infinite;
+  }
 }
