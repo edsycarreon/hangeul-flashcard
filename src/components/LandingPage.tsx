@@ -163,10 +163,7 @@ export const LandingPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                Master Korean Characters{" "}
-                <span className="text-blue-600">
-                  Before Your Favorite Korean Drama Ends
-                </span>
+                Flash Me <span className="text-blue-600">In Korean</span>
               </motion.h1>
               <motion.p
                 className="text-xl text-gray-600 mb-8"

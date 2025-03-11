@@ -46,9 +46,7 @@ export const FlashcardApp = () => {
     return (
       <div className="flex items-center justify-center min-h-screen w-full bg-gray-50">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">
-            Korean Character Flashcards
-          </h1>
+          <h1 className="text-2xl font-bold mb-4">Flash Me in Korean</h1>
           <p className="text-gray-600 mb-4">Initializing application...</p>
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
         </div>
@@ -62,7 +60,7 @@ export const FlashcardApp = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">
-              Korean Character Flashcards
+              Flash Me in Korean
             </h1>
             <p className="text-gray-600 text-sm">
               Learn to write Korean characters through practice
